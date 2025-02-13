@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Hcj9T+ZpRHg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\eliab\\Desktop\\movtech-project\\ClientsPedidosAPI\\ClientsPedidosAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\eliab\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\eliab\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
