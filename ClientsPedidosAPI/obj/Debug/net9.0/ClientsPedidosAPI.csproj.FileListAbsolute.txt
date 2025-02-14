@@ -137,3 +137,6 @@ C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\obj\Debug\net9.0\refint
 C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\obj\Debug\net9.0\ClientsPedidosAPI.pdb
 C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\obj\Debug\net9.0\ClientsPedidosAPI.genruntimeconfig.cache
 C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\obj\Debug\net9.0\ref\ClientsPedidosAPI.dll
+C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\eliab\Desktop\movtech-project\ClientsPedidosAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
