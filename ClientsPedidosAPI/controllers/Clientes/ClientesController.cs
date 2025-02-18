@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 [Route("api/clientes")]
 [ApiController]
@@ -25,6 +26,10 @@ public class ClientesController : ControllerBase
         
         if ((DateTime.Now.Year - cliente.DataNascimento.Year) < 18)
         return BadRequest("Cliente deve ter 18 anos ou mais!");
+
+        var emailAttribute = new EmailAddressAttribute();
+        if (!emailAttribute.IsValid(cliente.Email))
+            return BadRequest("Email Inválido!");
 
         _context.Clientes.Add(cliente);
         await _context.SaveChangesAsync();
