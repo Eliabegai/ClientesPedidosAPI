@@ -37,9 +37,11 @@ public class ClientesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> ObterCliente(int id)
+     public async Task<IActionResult> ObterCliente(int id)
     {
-        var cliente = await _context.Clientes.Include(c => c.Pedidos)
+        var cliente = await _context.Clientes
+            .Include(c => c.Pedidos)
+            .ThenInclude(p => p.Itens)
             .FirstOrDefaultAsync(c => c.Id == id);
         
         if (cliente == null) return NotFound();

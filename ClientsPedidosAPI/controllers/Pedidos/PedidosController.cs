@@ -45,7 +45,9 @@ public class PedidosController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> ObterPedido(int id)
     {
-        var pedido = await _context.Pedidos.Include(p => p.Itens)
+        var pedido = await _context.Pedidos
+            .Include(p => p.Itens)
+            .Include(p => p.Cliente)
             .FirstOrDefaultAsync(p => p.Id == id);
         
         if (pedido == null) return NotFound();
@@ -58,7 +60,7 @@ public class PedidosController : ControllerBase
         var query = _context.Pedidos.Include(p => p.Cliente).Include(p => p.Itens).AsQueryable();
 
         if (!string.IsNullOrEmpty(clienteNome))
-            query = query.Where(p => p.Cliente.Nome.Contains(clienteNome));
+            query = query.Where(p => p.Cliente != null && p.Cliente.Nome.Contains(clienteNome));
         
         if (inicio.HasValue && fim.HasValue)
             query = query.Where(p => p.DataPedido >= inicio && p.DataPedido <= fim);
