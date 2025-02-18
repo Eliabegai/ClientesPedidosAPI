@@ -14,7 +14,6 @@ mono_crash.*
 # Build results
 obj/
 Debug/
-[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -24,10 +23,10 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
-[Oo]bj/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/build/
+ClientsPedidosAPI/obj/
 
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
