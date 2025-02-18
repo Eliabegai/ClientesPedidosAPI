@@ -16,6 +16,10 @@ public class ClientesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CriarCliente([FromBody] Cliente cliente)
     {
+
+        if (!CpfValidator.isValid(cliente.CPF))
+            return BadRequest("CPF Inválido!");
+        
         if (await _context.Clientes.AnyAsync(c => c.CPF == cliente.CPF))
         return BadRequest("CPF já Cadastrado!");
         
