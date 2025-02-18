@@ -15,17 +15,31 @@ public class PedidosController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CriarPedido([FromBody] Pedido pedido)
     {
+        Console.WriteLine("Criar Pedido");
         var cliente = await _context.Clientes.FindAsync(pedido.ClienteId);
         if (cliente == null) return BadRequest("Cliente não encontrado!");
 
-        if (pedido.Itens.Any())
+        if (!pedido.Itens.Any())
             return BadRequest("O Pedido deve conter pelo menos um item!");
         
-        pedido.ValorTotal = pedido.Itens.Sum(i => i.Subtotal);
+        var newPedido = new Pedido
+        {
+            ClienteId = pedido.ClienteId,
+            DataPedido = DateTime.SpecifyKind(pedido.DataPedido, DateTimeKind.Utc), // Convertendo para UTC
+            ValorTotal = pedido.Itens.Sum(i => i.Subtotal),
+            Itens = pedido.Itens.Select(i => new ItemPedido
+            {
+                Produto = i.Produto,
+                Quantidade = i.Quantidade,
+                PrecoUnitario = i.PrecoUnitario
+            }).ToList()
+        };
 
-        _context.Pedidos.Add(pedido);
+        newPedido.ValorTotal = newPedido.Itens.Sum(i => i.Quantidade * i.PrecoUnitario);
+
+        _context.Pedidos.Add(newPedido);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(ObterPedido), new { id = pedido.Id }, pedido);
+        return CreatedAtAction(nameof(ObterPedido), new { id = newPedido.Id }, newPedido);
     }
 
     [HttpGet("{id}")]

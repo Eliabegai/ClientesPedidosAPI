@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Cliente
 {
+  private DateTime _dataNascimento;
   public int Id { get; set; }
 
   [Required]
@@ -12,7 +13,10 @@ public class Cliente
   public string Email { get; set; }
 
   [Required]
-  public DateTime DataNascimento  { get; set; }
+  public DateTime DataNascimento  { 
+    get=> _dataNascimento; 
+    set => _dataNascimento = DateTime.SpecifyKind(value, DateTimeKind.Utc); 
+  }
 
   [Required, StringLength(11)]
   public string CPF { get; set; }
