@@ -71,12 +71,12 @@ public class PedidosController : ControllerBase
         else if (inicio.HasValue)
         {
             var inicioUtc = DateTime.SpecifyKind(inicio.Value, DateTimeKind.Utc);
-            query = query.Where(p => p.DataPedido >= inicio);
+            query = query.Where(p => p.DataPedido >= inicioUtc);
         }
         else if (fim.HasValue)
         {
             var fimUtc = DateTime.SpecifyKind(fim.Value, DateTimeKind.Utc);
-            query = query.Where(p => p.DataPedido <= fim);
+            query = query.Where(p => p.DataPedido <= fimUtc);
         }
         
         return Ok(await query.ToListAsync());
