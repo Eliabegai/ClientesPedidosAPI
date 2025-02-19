@@ -1,0 +1,53 @@
+.pedido-list-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters input,
+.filters button {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.pedidos {
+    margin-top: 20px;
+}
+
+.pedido {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #12472a;
+}
+
+.cliente-nome {
+    margin-bottom: 10px;
+}
+
+.itens-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.itens-tabela th,
+.itens-tabela td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.itens-tabela th {
+    background-color: #156d21;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
