@@ -67,4 +67,45 @@ public class PedidosController : ControllerBase
         
         return Ok(await query.ToListAsync());
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> AtualizarPedido(int id, [FromBody] Pedido pedidoAtualizado)
+    {
+        var pedidoExistente = await _context.Pedidos
+            .Include(p => p.Itens)
+            .FirstOrDefaultAsync(p => p.Id == id);
+        
+        if (pedidoExistente == null) return NotFound();
+
+        // Verifica se a data de criação do pedido passou de 24h
+        if((DateTime.UtcNow - pedidoExistente.DataPedido).TotalHours > 24)
+            return BadRequest("Não é possível alterar pedidos com mais de 24h de criação!");
+
+        // Atualiza os campos do pedido existente com os novos dados
+
+        pedidoExistente.ClienteId = pedidoAtualizado.ClienteId;
+        pedidoExistente.DataPedido = DateTime.SpecifyKind(pedidoAtualizado.DataPedido, DateTimeKind.Utc);
+        pedidoExistente.ValorTotal = pedidoAtualizado.Itens.Sum(i => i.Subtotal);
+
+
+        // Atualiza os itens do pedido
+        pedidoExistente.Itens.Clear();
+        foreach (var item in pedidoAtualizado.Itens)
+        {
+            pedidoExistente.Itens.Add(new ItemPedido
+            {
+                Produto = item.Produto,
+                Quantidade = item.Quantidade,
+                PrecoUnitario = item.PrecoUnitario
+            });
+        }
+
+        pedidoExistente.ValorTotal = pedidoExistente.Itens.Sum(i => i.Quantidade * i.PrecoUnitario);
+
+        _context.Pedidos.Update(pedidoExistente);
+        await _context.SaveChangesAsync();
+
+        return Ok(pedidoExistente);
+
+    }
 }
