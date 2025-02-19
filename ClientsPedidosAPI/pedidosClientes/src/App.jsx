@@ -1,5 +1,6 @@
 import './App.css'
-import PedidoList from './components/PedidoList'
+import CadastrarNovoCliente from './components/Cadastrar Novo Cliente'
+import PedidoList from './components/ListaPedido'
 
 function App() {
 
@@ -7,6 +8,9 @@ function App() {
     <>
       <div>
         <h1>Pedido dos Clientes</h1>
+      </div>
+      <div className='cadastro'>
+        <CadastrarNovoCliente />
       </div>
       <div className="card">
         <PedidoList />

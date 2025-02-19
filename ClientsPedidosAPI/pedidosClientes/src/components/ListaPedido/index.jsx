@@ -4,9 +4,9 @@ import "./styles.css"
 
 const PedidoList = () => {
     const [pedidos, setPedidos] = useState([])
-    // const [clienteNome, setClienteNome] = useState("")
-    // const [inicio, setInicio] = useState("")
-    // const [fim, setFim] = useState("")
+    const [clienteNome, setClienteNome] = useState("")
+    const [inicio, setInicio] = useState("")
+    const [fim, setFim] = useState("")
 
     useEffect(() => {
         fetchPedidos()
@@ -26,11 +26,52 @@ const PedidoList = () => {
         }
     }
 
+    const fetchPedidosByFilter = async () => {
+        const query = `clienteNome=${clienteNome}&inicio=${inicio}&fim=${fim}`
+        try {
+            const response = await axios.get(`/api/pedidos?${query}`,{
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            setPedidos(response.data)
+        } catch (error) {
+            console.error("Erro ao buscar pedido", error)
+        }
+    }
+
+
     console.log(pedidos)
+
+    const handleFilter = () => {
+        fetchPedidosByFilter();
+    };
 
     return(
         <div className="pedido-list-container">
             <h2>Lista de Pedidos</h2>
+
+            <div className="filters">
+                <input
+                    type="text"
+                    placeholder="Nome do Cliente"
+                    value={clienteNome}
+                    onChange={(e) => setClienteNome(e.target.value)}
+                />
+                <input
+                    type="date"
+                    placeholder="Data Início"
+                    value={inicio}
+                    onChange={(e) => setInicio(e.target.value)}
+                />
+                <input
+                    type="date"
+                    placeholder="Data Fim"
+                    value={fim}
+                    onChange={(e) => setFim(e.target.value)}
+                />
+                <button onClick={handleFilter}>Filtrar</button>
+            </div>
 
             <div className="pedidos">
                 {
