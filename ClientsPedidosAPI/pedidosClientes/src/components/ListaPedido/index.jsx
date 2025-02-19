@@ -40,9 +40,6 @@ const PedidoList = () => {
         }
     }
 
-
-    console.log(pedidos)
-
     const handleFilter = () => {
         fetchPedidosByFilter();
     };

@@ -47,4 +47,13 @@ public class ClientesController : ControllerBase
         if (cliente == null) return NotFound();
         return Ok(cliente);
     }
+
+    [HttpGet("todos")]
+     public async Task<IActionResult> ObterTodosClientes(int id)
+    {
+        var cliente = await _context.Clientes.ToListAsync();
+        
+        if (cliente == null) return NotFound();
+        return Ok(cliente);
+    }
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles.css'
 import axios from 'axios'
 
@@ -9,6 +9,7 @@ const CadastrarNovoPedido = () => {
     const [dataPedido, setDataPedido] = useState('');
     const [itens, setItens] = useState([{ produto: '', quantidade: 1, precoUnitario: 0 }]);
     const [error, setError] = useState('');
+    const [clientes, setClientes] = useState([]);
 
     const cadastrar = () => {
         setIsModalOpen(true)
@@ -17,8 +18,25 @@ const CadastrarNovoPedido = () => {
     const closeModal = () => {
         setIsModalOpen(false)
     }
+
+    useEffect(() => {
+        fetchClientes();
+    }, [isModalOpen]);
+
+    const fetchClientes = async () => {
+        try {
+            const response = await axios.get('/api/clientes/todos', {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            setClientes(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar clientes:', error);
+        }
+    };
     
-        const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const pedido = { clienteId, dataPedido, itens };
         try {
@@ -61,8 +79,15 @@ const CadastrarNovoPedido = () => {
                         <h2>Cadastrar Pedido</h2>
                         <form onSubmit={handleSubmit}>
                             <label>
-                                Cliente ID:
-                                <input type="number" value={clienteId} onChange={(e) => setClienteId(e.target.value)} required />
+                                Cliente ID: 
+                                <select value={clienteId} onChange={e => setClienteId(e.target.value)} required>
+                                    <option value="">Selecione um cliente</option>
+                                    {clientes?.map((cliente) => (
+                                        <option key={cliente.id} value={cliente.id}>
+                                            {cliente.nome}
+                                        </option>
+                                    ))}
+                                </select>
                             </label>
                             <label>
                                 Data do Pedido:
