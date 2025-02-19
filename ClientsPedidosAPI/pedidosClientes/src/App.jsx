@@ -1,5 +1,6 @@
 import './App.css'
 import CadastrarNovoCliente from './components/CadastrarNovoCliente'
+import CadastrarNovoPedido from './components/CadastrarNovoPedido'
 import PedidoList from './components/ListaPedido'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       </div>
       <div className='cadastro'>
         <CadastrarNovoCliente />
+        <CadastrarNovoPedido />
       </div>
       <div className="card">
         <PedidoList />
