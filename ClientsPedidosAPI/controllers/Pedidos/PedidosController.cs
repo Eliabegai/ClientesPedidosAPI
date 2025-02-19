@@ -58,12 +58,26 @@ public class PedidosController : ControllerBase
     public async Task<IActionResult> ListarPedidos([FromQuery] string? clienteNome, [FromQuery] DateTime? inicio, [FromQuery] DateTime? fim)
     {
         var query = _context.Pedidos.Include(p => p.Cliente).Include(p => p.Itens).AsQueryable();
-
+        
         if (!string.IsNullOrEmpty(clienteNome))
             query = query.Where(p => p.Cliente != null && p.Cliente.Nome.Contains(clienteNome));
         
         if (inicio.HasValue && fim.HasValue)
-            query = query.Where(p => p.DataPedido >= inicio && p.DataPedido <= fim);
+        {
+            var inicioUtc = DateTime.SpecifyKind(inicio.Value, DateTimeKind.Utc);
+            var fimUtc = DateTime.SpecifyKind(fim.Value, DateTimeKind.Utc);
+            query = query.Where(p => p.DataPedido >= inicioUtc && p.DataPedido <= fimUtc);
+        }
+        else if (inicio.HasValue)
+        {
+            var inicioUtc = DateTime.SpecifyKind(inicio.Value, DateTimeKind.Utc);
+            query = query.Where(p => p.DataPedido >= inicio);
+        }
+        else if (fim.HasValue)
+        {
+            var fimUtc = DateTime.SpecifyKind(fim.Value, DateTimeKind.Utc);
+            query = query.Where(p => p.DataPedido <= fim);
+        }
         
         return Ok(await query.ToListAsync());
     }
@@ -107,5 +121,5 @@ public class PedidosController : ControllerBase
 
         return Ok(pedidoExistente);
 
-    }
+    } 
 }
