@@ -1,5 +1,5 @@
 import './App.css'
-import CadastrarNovoCliente from './components/Cadastrar Novo Cliente'
+import CadastrarNovoCliente from './components/CadastrarNovoCliente'
 import PedidoList from './components/ListaPedido'
 
 function App() {
