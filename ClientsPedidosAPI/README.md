@@ -3,17 +3,23 @@
 # Iniciar banco de dados
 ## Requer Docker
 
-``` bash
+```bash
 docker-compose up -d
 ```
 
 ## Migration
-``` bash
+```bash
 dotnet ef migrations add InitialCreate
 ```
 
 ## Aplicar migrations ao banco de dados
-``` bash
+```bash
 dotnet ef database update
 ```
 
+# Rodar API
+(reinicia automaticamente ao editar o código)
+```bash
+dotnet run
+dotnet watch run
+```
