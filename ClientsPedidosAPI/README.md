@@ -58,11 +58,11 @@ dotnet ef database update
 ```
 
 # Rodar API
-(reinicia automaticamente ao editar o código)
 ```bash
 dotnet run
 dotnet watch run
 ```
+(reinicia automaticamente ao editar o código)
 
 A API estará disponível em `http://localhost:5020` ou `https://localhost:5001`.
 
