@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import "./styles.css"
+import EditPedido from "../EditarPedido"
 
 const PedidoList = () => {
     const [pedidos, setPedidos] = useState([])
@@ -44,6 +45,7 @@ const PedidoList = () => {
         fetchPedidosByFilter();
     };
 
+
     return(
         <div className="pedido-list-container">
             <h2>Lista de Pedidos</h2>
@@ -74,7 +76,11 @@ const PedidoList = () => {
                 {
                     pedidos?.map((pedido) => (
                         <div key={pedido.id} className="pedido">
-                            <h3 className="cliente-nome">Cliente: {pedido.cliente.nome}</h3>
+                            <div className="cliente">
+                                <h3 className="cliente-nome">Cliente: {pedido.cliente.nome}</h3>
+                                <EditPedido pedido={pedido} fetchPedidos={fetchPedidos} />
+                            </div>
+                                
                             <table className="itens-tabela">
                                 <thead>
                                     <th>Produto</th>
